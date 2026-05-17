@@ -17,6 +17,7 @@ import ThanksPage from "./components/pages/ThanksPage";
 import ProfilePage from "./components/pages/ProfilePage";
 import CheckoutPage from "./components/pages/CheckoutPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import OrderSuccessPage from "./components/pages/OrderSuccessPage";
 import "./App.css";
 
 const Home = () => {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/thanks" element={<ThanksPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/order-success" element={<OrderSuccessPage />} />
         <Route path="/profile" element={
           <ProtectedRoute>
             <ProfilePage />
