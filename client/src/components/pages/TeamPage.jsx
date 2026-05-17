@@ -1,25 +1,28 @@
 import "../../styles/Team.css";
 
+import imgTeamMember1 from "/src/assets/imgs/team-member2.avif";
+import imgTeamMember2 from "/src/assets/imgs/team-member1.avif";
+import imgTeamMember3 from "/src/assets/imgs/team-member3.avif";
+
 const TeamPage = () => {
   const teamMembers = [
     {
       id: 1,
       name: "Camila Mera",
       role: "Nutricionista",
-      image: "/src/assets/imgs/team-member2.avif",
+      image: imgTeamMember1,
     },
     {
       id: 2,
       name: "Francisco Sagredo",
       role: "Preparador físico",
-      image: "/src/assets/imgs/team-member1.avif",
+      image: imgTeamMember2,
     },
     {
       id: 3,
       name: "Miguel Negron",
       role: "Nutricionista",
-      image: "/src/assets/imgs/team-member3.avif",
-
+      image: imgTeamMember3,
     },
   ];
   return (

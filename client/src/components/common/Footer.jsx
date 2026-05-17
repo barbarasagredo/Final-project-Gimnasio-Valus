@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-center">
             <a href="/" className="logo">
-              <img src="/public/favicon.svg" alt="Logotipo Valus" />
+              <img src="/favicon.svg" alt="Logotipo Valus" />
             </a>
             <h2 className="title">VALUS</h2>
           </div>

@@ -7,24 +7,24 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-import img1 from "../../assets/imgs/hero1.avif";
-import img2 from "../../assets/imgs/hero2.avif";
-import img3 from "../../assets/imgs/hero3.avif";
+import imgHero1 from "/src/assets/imgs/hero1.avif";
+import imgHero2 from "/src/assets/imgs/hero2.avif";
+import imgHero3 from "/src/assets/imgs/hero3.avif";
 import DumbbellIcon from "../icons/DumbbellIcon";
 
 const Hero = () => {
   const slides = [
     {
       id: 1,
-      image: img1,
+      image: imgHero1,
     },
     {
       id: 2,
-      image: img2,
+      image: imgHero2,
     },
     {
       id: 3,
-      image: img3,
+      image: imgHero3,
     },
   ];
 
