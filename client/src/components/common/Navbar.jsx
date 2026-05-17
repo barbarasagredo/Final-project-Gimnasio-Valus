@@ -47,6 +47,11 @@ const Navbar = () => {
             Perfil
           </Link>
         )}
+        {user?.role === "admin" && (
+          <Link to="/admin" onClick={handleLinkClick} style={{ color: "#e48532", fontWeight: "bold" }}>
+            Administrador
+          </Link>
+        )}
       </div>
 
       <div className="navbar-right">
@@ -69,6 +74,11 @@ const Navbar = () => {
         <button onClick={() => scrollToSection("plans")}>Planes</button>
         <button onClick={() => scrollToSection("team")}>Equipo</button>
         {user && <a onClick={() => scrollToSection("store")}>Tienda</a>}
+        {user?.role === "admin" && (
+          <Link to="/admin" onClick={handleLinkClick} style={{ color: "#e53e3e", fontWeight: "bold" }}>
+            Admin
+          </Link>
+        )}
         {user ? (
           <button onClick={logout}>Cerrar sesión</button>
         ) : (

@@ -28,12 +28,15 @@ const createReview = async (req, res) => {
 const deleteReview = async (req, res) => {
   const { id } = req.params;
   const user_id = req.user.id;
+  const user_role = req.user.role;
   try {
     const review = await pool.query("SELECT * FROM reviews WHERE id = $1", [id]);
     if (review.rows.length === 0) {
       return res.status(404).json({ message: "Reseña no encontrada" });
     }
-    if (review.rows[0].user_id !== user_id) {
+    const esAdmin = user_role === "admin";
+    const esDueno = review.rows[0].user_id === user_id;
+    if (!esAdmin && !esDueno) {
       return res.status(403).json({ message: "No autorizado" });
     }
     await pool.query("DELETE FROM reviews WHERE id = $1", [id]);

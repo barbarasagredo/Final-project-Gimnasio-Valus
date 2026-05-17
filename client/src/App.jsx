@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import AdminPage from "./components/pages/AdminPage";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import Hero from "./components/common/Hero";
@@ -47,6 +48,7 @@ function App() {
             <ProfilePage />
           </ProtectedRoute>
         } />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />

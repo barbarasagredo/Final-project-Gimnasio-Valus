@@ -34,3 +34,18 @@ export const createReview = async (rating, comment, token) => {
   });
   return res.json();
 };
+
+export const deleteReview = async (id, token) => {
+  const res = await fetch(`${API_URL}/reviews/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
+
+export const getUsers = async (token) => {
+  const res = await fetch(`${API_URL}/admin/users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
