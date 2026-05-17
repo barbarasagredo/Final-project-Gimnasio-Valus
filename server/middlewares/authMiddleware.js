@@ -4,11 +4,7 @@ require("dotenv").config();
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Token no proporcionado" });
-  }
-
+  if (!token) return res.status(401).json({ message: "Token no proporcionado" });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
@@ -18,4 +14,11 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken };
+const verifyAdmin = (req, res, next) => {
+  if (req.user?.role !== "admin") {
+    return res.status(403).json({ message: "Acceso denegado: se requiere rol admin" });
+  }
+  next();
+};
+
+module.exports = { verifyToken, verifyAdmin };
