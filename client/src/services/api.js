@@ -49,3 +49,27 @@ export const getUsers = async (token) => {
   });
   return res.json();
 };
+
+export const getProducts = async () => {
+  const res = await fetch(`${API_URL}/products`);
+  return res.json();
+};
+
+export const createOrder = async (order, token) => {
+  const res = await fetch(`${API_URL}/orders`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(order),
+  });
+  return res.json();
+};
+
+export const getMyOrders = async (token) => {
+  const res = await fetch(`${API_URL}/orders/my-orders`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};

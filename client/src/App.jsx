@@ -15,6 +15,7 @@ import Register from "./components/pages/Register";
 import FeedbackPage from "./components/pages/FeedbackPage";
 import ThanksPage from "./components/pages/ThanksPage";
 import ProfilePage from "./components/pages/ProfilePage";
+import CheckoutPage from "./components/pages/CheckoutPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import "./App.css";
 
@@ -43,6 +44,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/thanks" element={<ThanksPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/profile" element={
           <ProtectedRoute>
             <ProfilePage />

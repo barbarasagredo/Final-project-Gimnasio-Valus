@@ -1,65 +1,75 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import { getProducts } from "../../services/api";
+import { useEffect } from "react";
 import "../../styles/Shop.css";
 
-import imgShop1 from "/src/assets/imgs/tienda1.avif";
-import imgShop2 from "/src/assets/imgs/tienda2.avif";
-import imgShop3 from "/src/assets/imgs/tienda3.avif";
-import imgShop4 from "/src/assets/imgs/tienda4.avif";
-import imgShop5 from "/src/assets/imgs/tienda5.avif";
-import imgShop6 from "/src/assets/imgs/tienda6.avif";
-
-const products = [
-  {
-    id: 1,
-    name: "Proteína en polvo",
-    price: "$2.000",
-    image: imgShop5,
-  },
-  {
-    id: 2,
-    name: "Agua hidratante",
-    price: "$1.800",
-    image: imgShop1,
-  },
-  {
-    id: 3,
-    name: "Galletas de proteína",
-    price: "$1.800",
-    image: imgShop2,
-  },
-  {
-    id: 4,
-    name: "Creatina Monohydrate",
-    price: "$1.800",
-    image: imgShop4,
-  },
-  {
-    id: 5,
-    name: "Barra proteíca",
-    price: "$2.000",
-    image: imgShop3,
-  },
-  {
-    id: 6,
-    name: "Suplemento vitamínico",
-    price: "$1.800",
-    image: imgShop6,
-  },
-];
-
 const ShopPage = () => {
+  const [products, setProducts] = useState([]);
+  const { cart, addToCart, removeFromCart, updateQuantity, total } = useCart();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts();
+      if (Array.isArray(data)) setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
+  const cartCount = cart.reduce((sum, p) => sum + p.quantity, 0);
+
   return (
     <section className="shop-section">
       <h4 className="shop-subtitle">Tienda</h4>
       <p className="shop-description">
         Disponible de manera presencial, consulta disponibilidad.
       </p>
+
+      {cart.length > 0 && (
+        <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "12px", padding: "1rem", marginBottom: "2rem", maxWidth: "600px", margin: "0 auto 2rem" }}>
+          <h4 style={{ color: "#e07b20", marginBottom: "0.5rem" }}>🛒 Carrito ({cartCount} productos)</h4>
+          {cart.map((p) => {
+            const price = parseInt(p.price.replace(/\D/g, ""));
+            return (
+              <div key={p.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.1)", color: "#fff", fontSize: "0.9rem" }}>
+                <span style={{ flex: 1 }}>{p.name}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <button onClick={() => updateQuantity(p.id, p.quantity - 1)} style={{ background: "#333", color: "#fff", border: "none", borderRadius: "4px", width: "24px", height: "24px", cursor: "pointer" }}>-</button>
+                  <span>{p.quantity}</span>
+                  <button onClick={() => updateQuantity(p.id, p.quantity + 1)} style={{ background: "#333", color: "#fff", border: "none", borderRadius: "4px", width: "24px", height: "24px", cursor: "pointer" }}>+</button>
+                </div>
+                <span style={{ width: "80px", textAlign: "right" }}>${(price * p.quantity).toLocaleString("es-CL")}</span>
+                <button onClick={() => removeFromCart(p.id)} style={{ background: "#e53e3e", color: "#fff", border: "none", borderRadius: "4px", padding: "2px 8px", cursor: "pointer", marginLeft: "8px" }}>✕</button>
+              </div>
+            );
+          })}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem" }}>
+            <span style={{ color: "#e07b20", fontWeight: "bold" }}>Total: ${total.toLocaleString("es-CL")}</span>
+            <button
+              onClick={() => navigate("/checkout")}
+              style={{ background: "#e07b20", color: "#fff", border: "none", borderRadius: "6px", padding: "8px 20px", cursor: "pointer", fontWeight: "bold" }}
+            >
+              Finalizar compra
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="shop-grid">
         {products.map((product) => (
-          <div key={product.id} className="shop-card">
+          <div key={product.id} className="shop-card" style={{ position: "relative" }}>
             <img src={product.image} alt={product.name} />
             <div className="shop-card-overlay">
               <h3 className="shop-card-name">{product.name}</h3>
               <p className="shop-card-price">{product.price}</p>
+              <button
+                onClick={() => addToCart(product)}
+                style={{ marginTop: "8px", background: "#e07b20", color: "#fff", border: "none", borderRadius: "6px", padding: "6px 16px", cursor: "pointer", fontWeight: "bold" }}
+              >
+                + Agregar
+              </button>
             </div>
           </div>
         ))}
