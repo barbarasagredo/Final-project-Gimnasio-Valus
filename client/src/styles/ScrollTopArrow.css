@@ -1,0 +1,39 @@
+.scroll-top-arrow {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--icon-bg);
+  color: #d7d7d7;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-top-arrow:hover {
+  background-color: var(--icon-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-top-arrow:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .scroll-top-arrow {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}

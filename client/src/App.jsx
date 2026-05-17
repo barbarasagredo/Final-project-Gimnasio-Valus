@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import AdminPage from "./components/pages/AdminPage";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import Hero from "./components/common/Hero";
@@ -19,6 +18,8 @@ import CheckoutPage from "./components/pages/CheckoutPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import OrderSuccessPage from "./components/pages/OrderSuccessPage";
 import "./App.css";
+import ScrollTopArrow from "./components/common/ScrollTopArrow";
+import AdminPage from "./components/pages/AdminPage";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
@@ -26,11 +27,23 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <section id="about"><AboutUsPage /></section>
-      <section id="reviews"><ReviewsPage /></section>
-      <section id="plans"><PlansPage /></section>
-      <section id="team"><TeamPage /></section>
-      {user && <section id="store"><ShopPage /></section>}
+      <section id="about">
+        <AboutUsPage />
+      </section>
+      <section id="reviews">
+        <ReviewsPage />
+      </section>
+      <section id="plans">
+        <PlansPage />
+      </section>
+      <section id="team">
+        <TeamPage />
+      </section>
+      {user && (
+        <section id="store">
+          <ShopPage />
+        </section>
+      )}
     </>
   );
 };
@@ -55,6 +68,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      <ScrollTopArrow />
       <Footer />
     </>
   );
