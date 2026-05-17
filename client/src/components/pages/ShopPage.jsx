@@ -27,7 +27,6 @@ const ShopPage = () => {
         Disponible de manera presencial, consulta disponibilidad.
       </p>
 
-      {/* Carrito */}
       {cart.length > 0 && (
         <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "12px", padding: "1rem", marginBottom: "2rem", maxWidth: "600px", margin: "0 auto 2rem" }}>
           <h4 style={{ color: "#e07b20", marginBottom: "0.5rem" }}>🛒 Carrito ({cartCount} productos)</h4>
@@ -58,7 +57,6 @@ const ShopPage = () => {
         </div>
       )}
 
-      {/* Productos */}
       <div className="shop-grid">
         {products.map((product) => (
           <div key={product.id} className="shop-card" style={{ position: "relative" }}>
