@@ -1,23 +1,27 @@
 import "../../styles/AboutUs.css";
 
+import imgAboutus1 from "/src/assets/imgs/aboutus1.avif";
+import imgAboutus2 from "/src/assets/imgs/aboutus2.avif";
+import imgAboutus3 from "/src/assets/imgs/aboutus3.avif";
+
 const features = [
   {
     id: 1,
     title: "Fuerza y Rendimiento",
     text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-    image: "/src/assets/imgs/aboutus1.avif",
+    image: imgAboutus1,
   },
   {
     id: 2,
     title: "Fuerza y Rendimiento",
     text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-    image: "/src/assets/imgs/aboutus2.avif",
+    image: imgAboutus2,
   },
   {
     id: 3,
     title: "Fuerza y Rendimiento",
     text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
-    image: "/src/assets/imgs/aboutus3.avif",
+    image: imgAboutus3,
   },
 ];
 
