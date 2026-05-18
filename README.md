@@ -2,11 +2,15 @@
 
 Este es el proyecto final de gestión de gimnasio, desarrollado como una aplicación web full-stack que permite administrar socios, rutinas y servicios de manera eficiente.
 
-# Deploy:
+# 🚀 Deploy:
  1. https://gimnasio-valus.netlify.app/
  2. https://gimnasio-valus-valdivia.netlify.app/
+
+ Para probar, puedes crear un usuario, y para probar los roles de administración puedes utilizar las siguientes credenciales:
+ usuario: **admin@admin.com**
+ contraseña: **admin123**
  
-## 🚀 Estructura del Proyecto
+## 🤖 Estructura del Proyecto
 
 El repositorio está dividido en dos partes principales:
 
