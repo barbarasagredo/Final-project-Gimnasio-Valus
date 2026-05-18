@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
@@ -10,22 +10,28 @@ const CheckoutPage = () => {
   const { user, token } = useContext(AuthContext);
   const { cart, total, clearCart } = useCart();
   const navigate = useNavigate();
-  const [tipo, setTipo] = useState("retiro");
+  const [tipo, setTipo] = useState("");
   const [direccion, setDireccion] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const ordered = useRef(false); // ✅ evita el redirect prematuro
 
   if (!user) {
     navigate("/login");
     return null;
   }
 
-  if (cart.length === 0) {
+  // ✅ solo redirige al home si el carrito está vacío Y no acaba de ordenar
+  if (cart.length === 0 && !ordered.current) {
     navigate("/");
     return null;
   }
 
   const handleSubmit = async () => {
+    if (!tipo) {
+      setError("Debes seleccionar retiro o despacho");
+      return;
+    }
     if (tipo === "despacho" && !direccion.trim()) {
       setError("Debes ingresar una dirección de despacho");
       return;
@@ -47,8 +53,9 @@ const CheckoutPage = () => {
     );
     setLoading(false);
     if (data.order) {
+      ordered.current = true; // ✅ marca que ya ordenó
       clearCart();
-      navigate("/thanks");
+      navigate("/order-success");
     } else {
       setError("Error al procesar la orden");
     }
@@ -58,11 +65,10 @@ const CheckoutPage = () => {
     <div className="auth-container">
       <div className="auth-card" style={{ maxWidth: "500px" }}>
         <p style={{ color: "#e07b20", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", marginBottom: 10, fontSize: "0.85rem" }}>
-          Checkout
+          Carrito de compra
         </p>
         <h3 className="auth-title">Resumen de tu orden</h3>
 
-        {/* Lista de productos */}
         <div style={{ width: "100%", marginBottom: "1rem" }}>
           {cart.map((p) => {
             const price = parseInt(p.price.replace(/\D/g, ""));
@@ -79,23 +85,34 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        {/* Tipo de entrega */}
+        <p style={{ color: "#ccc", fontSize: "0.85rem", marginBottom: "0.5rem", alignSelf: "flex-start" }}>
+          Selecciona el tipo de entrega:
+        </p>
         <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", width: "100%" }}>
           <button
             onClick={() => setTipo("retiro")}
-            style={{ flex: 1, padding: "0.6rem", borderRadius: "6px", border: "none", background: tipo === "retiro" ? "#e07b20" : "rgba(255,255,255,0.1)", color: "#fff", cursor: "pointer", fontWeight: tipo === "retiro" ? "bold" : "normal" }}
+            style={{
+              flex: 1, padding: "0.6rem", borderRadius: "6px",
+              border: tipo === "retiro" ? "2px solid #e07b20" : "2px solid transparent",
+              background: tipo === "retiro" ? "#e07b20" : "rgba(255,255,255,0.1)",
+              color: "#fff", cursor: "pointer", fontWeight: tipo === "retiro" ? "bold" : "normal"
+            }}
           >
             Retiro en tienda
           </button>
           <button
             onClick={() => setTipo("despacho")}
-            style={{ flex: 1, padding: "0.6rem", borderRadius: "6px", border: "none", background: tipo === "despacho" ? "#e07b20" : "rgba(255,255,255,0.1)", color: "#fff", cursor: "pointer", fontWeight: tipo === "despacho" ? "bold" : "normal" }}
+            style={{
+              flex: 1, padding: "0.6rem", borderRadius: "6px",
+              border: tipo === "despacho" ? "2px solid #e07b20" : "2px solid transparent",
+              background: tipo === "despacho" ? "#e07b20" : "rgba(255,255,255,0.1)",
+              color: "#fff", cursor: "pointer", fontWeight: tipo === "despacho" ? "bold" : "normal"
+            }}
           >
             Despacho a domicilio
           </button>
         </div>
 
-        {/* Dirección si es despacho */}
         {tipo === "despacho" && (
           <input
             type="text"
@@ -108,11 +125,13 @@ const CheckoutPage = () => {
 
         {error && <p style={{ color: "#ff6b6b", fontSize: "0.85rem" }}>{error}</p>}
 
-        <Button
-          className="cta-button"
-          onClick={handleSubmit}
-          text={loading ? "Procesando..." : "Confirmar orden"}
-        />
+        <div style={{ width: "100%", opacity: !tipo ? 0.5 : 1, cursor: !tipo ? "not-allowed" : "pointer" }}>
+          <Button
+            className="cta-button"
+            onClick={!tipo ? undefined : handleSubmit}
+            text={loading ? "Procesando..." : "Confirmar orden"}
+          />
+        </div>
       </div>
     </div>
   );

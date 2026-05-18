@@ -16,6 +16,7 @@ import ThanksPage from "./components/pages/ThanksPage";
 import ProfilePage from "./components/pages/ProfilePage";
 import CheckoutPage from "./components/pages/CheckoutPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import OrderSuccessPage from "./components/pages/OrderSuccessPage";
 import "./App.css";
 import ScrollTopArrow from "./components/common/ScrollTopArrow";
 import AdminPage from "./components/pages/AdminPage";
@@ -58,14 +59,12 @@ function App() {
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route path="/thanks" element={<ThanksPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/order-success" element={<OrderSuccessPage />} />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        } />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
