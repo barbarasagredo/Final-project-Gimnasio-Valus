@@ -7,20 +7,20 @@ import imgAboutus3 from "/src/assets/imgs/aboutus3.avif";
 const features = [
   {
     id: 1,
-    title: "Fuerza y Rendimiento",
-    text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+    title: "Zona de Fuerza y Cardio",
+    text: "Equipamiento moderno y una amplia variedad de máquinas de pesas, mancuernas y caminadoras para potenciar tu resistencia y construir masa muscular a tu propio ritmo.",
     image: imgAboutus1,
   },
   {
     id: 2,
-    title: "Fuerza y Rendimiento",
-    text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+    title: "Entrenamiento Funcional",
+    text: "Sesiones dinámicas de alta intensidad diseñadas para mejorar tu agilidad, fuerza core y quemar calorías en un ambiente grupal y motivador.",
     image: imgAboutus2,
   },
   {
     id: 3,
-    title: "Fuerza y Rendimiento",
-    text: "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+    title: "Coach Personalizado",
+    text: "Entrenadores certificados que diseñarán rutinas a tu medida y te guiarán paso a paso en cada ejercicio para asegurar tus resultados de forma segura.",
     image: imgAboutus3,
   },
 ];
@@ -31,8 +31,12 @@ const AboutUsPage = () => {
       <h4 className="about-subtitle">Conócenos</h4>
       <h3 className="about-title">¿Por qué entrenar con nosotros?</h3>
       <p className="about-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Somos un espacio diseñado para personas de todos los niveles, desde
+        principiantes hasta atletas de alto rendimiento.
+        <br />
+        Nuestra misión es motivarte a adoptar un estilo de vida saludable a
+        través de un entrenamiento inteligente, instalaciones modernas y un
+        ambiente lleno de energía.
       </p>
       <div className="about-grid">
         {features.map((feature) => (
