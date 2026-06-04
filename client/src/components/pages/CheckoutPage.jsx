@@ -14,14 +14,13 @@ const CheckoutPage = () => {
   const [direccion, setDireccion] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const ordered = useRef(false); // ✅ evita el redirect prematuro
+  const ordered = useRef(false);
 
   if (!user) {
     navigate("/login");
     return null;
   }
 
-  // ✅ solo redirige al home si el carrito está vacío Y no acaba de ordenar
   if (cart.length === 0 && !ordered.current) {
     navigate("/");
     return null;
@@ -53,7 +52,7 @@ const CheckoutPage = () => {
     );
     setLoading(false);
     if (data.order) {
-      ordered.current = true; // ✅ marca que ya ordenó
+      ordered.current = true;
       clearCart();
       navigate("/order-success");
     } else {

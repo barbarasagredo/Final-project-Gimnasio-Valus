@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { getUsers, getReviews, deleteReview, getProducts, createProduct, updateProduct, deleteProduct } from "../../services/api";
+import { getUsers, getReviews, deleteReview, getProducts, getAllProducts, createProduct, updateProduct, deleteProduct, toggleProduct } from "../../services/api";
 import { Navigate } from "react-router-dom";
 
 const AdminPage = () => {
@@ -34,10 +34,10 @@ const AdminPage = () => {
     setReviews(data);
   };
 
-  const fetchProducts = async () => {
-    const data = await getProducts();
-    if (Array.isArray(data)) setProducts(data);
-  };
+const fetchProducts = async () => {
+  const data = await getAllProducts(token);
+  if (Array.isArray(data)) setProducts(data);
+};
 
   const handleDeleteReview = async (id) => {
     if (!confirm("¿Estás seguro de eliminar esta reseña?")) return;
@@ -49,6 +49,11 @@ const AdminPage = () => {
     if (!confirm("¿Estás seguro de eliminar este producto?")) return;
     await deleteProduct(id, token);
     setProducts(products.filter((p) => p.id !== id));
+  };
+
+  const handleToggleProduct = async (id) => {
+    const updated = await toggleProduct(id, token);
+    setProducts(products.map((p) => p.id === id ? updated : p));
   };
 
   const handleEditProduct = (product) => {
@@ -250,7 +255,21 @@ const AdminPage = () => {
                     <img src={p.image} alt={p.name} style={{ width: "50px", height: "50px", objectFit: "cover", borderRadius: "4px" }} />
                   </td>
                   <td style={td}>
-                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                      <button
+                        onClick={() => handleToggleProduct(p.id)}
+                        style={{
+                          background: p.active ? "#33af50" : "#969696",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "4px",
+                          padding: "4px 10px",
+                          cursor: "pointer",
+                          fontSize: "0.8rem"
+                        }}
+                      >
+                        {p.active ? "Activo" : "Inactivo"}
+                      </button>
                       <button
                         onClick={() => handleEditProduct(p)}
                         style={{ background: "#333", color: "#fff", border: "none", borderRadius: "4px", padding: "4px 10px", cursor: "pointer" }}
