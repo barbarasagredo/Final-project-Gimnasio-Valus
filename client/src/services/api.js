@@ -50,6 +50,13 @@ export const getUsers = async (token) => {
   return res.json();
 };
 
+export const getAllProducts = async (token) => {
+  const res = await fetch(`${API_URL}/products/admin/all`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
+
 export const getProducts = async () => {
   const res = await fetch(`${API_URL}/products`);
   return res.json();
@@ -101,6 +108,14 @@ export const updateProduct = async (id, product, token) => {
 export const deleteProduct = async (id, token) => {
   const res = await fetch(`${API_URL}/products/${id}`, {
     method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.json();
+};
+
+export const toggleProduct = async (id, token) => {
+  const res = await fetch(`${API_URL}/products/${id}/toggle`, {
+    method: "PATCH",
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.json();

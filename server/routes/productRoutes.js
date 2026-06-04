@@ -3,9 +3,19 @@ const router = express.Router();
 const pool = require("../config/db");
 const { verifyToken, verifyAdmin } = require("../middlewares/authMiddleware");
 
-router.get("/", async (req, res) => {
+
+router.get("/admin/all", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const result = await pool.query("SELECT * FROM products ORDER BY id ASC");
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener productos", error: error.message });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM products WHERE active = true ORDER BY id ASC");
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener productos", error: error.message });
@@ -52,6 +62,24 @@ router.delete("/:id", verifyToken, verifyAdmin, async (req, res) => {
     res.json({ message: "Producto eliminado" });
   } catch (error) {
     res.status(500).json({ message: "Error al eliminar producto", error: error.message });
+  }
+});
+
+router.patch("/:id/toggle", verifyToken, verifyAdmin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await pool.query("SELECT active FROM products WHERE id = $1", [id]);
+    if (product.rows.length === 0) {
+      return res.status(404).json({ message: "Producto no encontrado" });
+    }
+    const newActive = !product.rows[0].active;
+    const result = await pool.query(
+      "UPDATE products SET active = $1 WHERE id = $2 RETURNING *",
+      [newActive, id]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(500).json({ message: "Error al actualizar producto", error: error.message });
   }
 });
 
